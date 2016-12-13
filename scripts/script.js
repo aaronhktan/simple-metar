@@ -78,7 +78,7 @@ function fetchMetar(station) {
 		document.getElementById("returnButton").style.display = "inline-block"; // Show the return button
 	}).catch(function(reason) { // This means that the query was rejected for some reason
 		console.log(reason); // Log the reason and tell the user
-		raw.innerHTML = "Your request was invalid!<br><br>";
+		raw.innerHTML = "Your request was invalid!" + "<br><br>";
 		document.getElementById("location").appendChild(raw);
 		document.getElementById("returnButton").style.display = "inline-block";
     });
