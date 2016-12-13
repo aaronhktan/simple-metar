@@ -102,7 +102,13 @@ html {
 	}
 
 /* Set top margin */
-@media (min-height: 51em) {
+@media (min-height: 61em) {
+	body {
+		margin-top: 50%;
+	}
+}
+
+@media (min-height: 51em) and (max-height: 60em) {
 	body {
 		margin-top: 15%;
 	}
@@ -253,20 +259,21 @@ html {
 
 svg {
   max-width: 100%;
-  height: auto;
+  height: 50%;
   display: block;
 }
 
-/*Paper Plane: Container*/
+/* Paper Plane: Container */
 .plane-container {
-  width: 200px;
-  margin: 0px auto;
+  max-width: 50%;
+  margin: 5% auto;
   z-index: 3;
 }
- /*Paper Plane: Image*/
+
+ /* Paper Plane: Image */
 .plane {
   width: 100%;
-  height: 60px;
+  max-height: 60px;
 }
 
 /* Paper Plane: Animation from http://codepen.io/ItsJonQ/pen/yvfDF/ */
