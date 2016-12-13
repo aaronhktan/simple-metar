@@ -115,14 +115,14 @@ html {
 
 @media screen and (min-width: 42em) and (max-width: 64em) {
 	.project-name {
-		font-size: 3.5rem; } 
+		font-size: 3rem; } 
 	.instruction {
 		font-size: 1.15rem; } 
 	}
 
 @media screen and (max-width: 42em) {
 	.project-name {
-		font-size: 3rem; } 
+		font-size: 2rem; } 
 	.instruction {
 		font-size: 1rem; }
 	}
