@@ -71,7 +71,7 @@ function getUserLocation() {
 // Function to get METAR provided station identifer
 function fetchMetar(params) {
 
-	var URL = "http://avwx.rest/api/metar/" + params; // This is the URL
+	var URL = "https://avwx.rest/api/metar/" + params; // This is the URL
 
 	var raw = document.createElement('div'); // This creates a new div to display the raw METAR
 	raw.id = "raw";
