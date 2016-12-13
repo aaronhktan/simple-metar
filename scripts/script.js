@@ -33,6 +33,7 @@ returnButton.addEventListener('click', function(event) {
 	document.getElementById("getMetarButton").style.display = "inline-block";
 	document.getElementById("useLocationButton").style.display = "inline-block";
 	document.getElementById("returnButton").style.display = "none";
+	document.getElementById('loading-animation').style.display = "none";
 	document.getElementById("raw").parentNode.removeChild(document.getElementById("raw"));
 })
 
