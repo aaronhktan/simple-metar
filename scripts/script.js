@@ -9,7 +9,6 @@ getMetarButton.addEventListener('click', function(event) {
 	document.getElementById("stationIdentifier").style.display = "none";
 	document.getElementById("getMetarButton").style.display = "none";
 	document.getElementById("useLocationButton").style.display = "none";
-	document.getElementById("returnButton").style.display = "inline-block";
 	fetchMetar(station);
 });
 
@@ -71,9 +70,11 @@ function fetchMetar(station) {
 		}
 
 		document.getElementById("location").appendChild(raw); // Add to the webpage!
+		document.getElementById("returnButton").style.display = "inline-block"; // Show the return button
 	}).catch(function(reason) { // This means that the query was rejected for some reason
 		console.log(reason); // Log the reason and tell the user
 		raw.innerHTML = "Your request was invalid!<br><br>";
 		document.getElementById("location").appendChild(raw);
+		document.getElementById("returnButton").style.display = "inline-block";
     });
 }
