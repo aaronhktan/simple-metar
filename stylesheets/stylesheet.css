@@ -3,13 +3,8 @@
 
 /* This is for the background color */
 html {
-	height: 100%;
 	background-color: #1E90FF;
 	background-image: linear-gradient(120deg, #1E90FF, #87CEEB);
-}
-
-body {
-	margin-top: 15%;
 }
 
 .title {
@@ -99,6 +94,49 @@ body {
 		width: 85%;
 		font-size: 1.5rem; }
 	}
+
+/* Set top margin */
+@media (min-height: 51em) {
+	body {
+		margin-top: 15%;
+	}
+	html {
+		height: 100%;
+	}
+}
+
+@media screen and (min-height: 41em) and (max-height: 50em) {
+	body {
+		margin-top: 15%;
+	}
+	html {
+		height: 100%;
+	}
+}
+
+@media screen and (min-height: 31em) and (max-height: 40em) {
+	body {
+		margin-top: 10%;
+	}
+	html {
+		height: 100%;
+	}
+}
+
+@media screen and (min-height: 21em) and (max-height: 30em) {
+	body {
+		margin-top: 0%;
+	}
+	html {
+		height: 100%;
+	}
+}
+
+@media screen and (max-height: 20em) {
+	body {
+		margin-top: 0%;
+	}
+}
 
 /* Style the title, tagline, instruction text */
 .instruction {
