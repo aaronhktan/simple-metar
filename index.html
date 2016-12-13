@@ -3,6 +3,12 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Simple METAR</title>
+		<script type="text/javascript">
+			var host = "simplemetar.tk";
+			if ((host == window.location.host) && (window.location.protocol != "https:"))
+			window.location.protocol = "https";
+		</script>
+		<link rel="canonical" href=" { { site.url } }{ { page.url } }" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="description" content="A simple and beautiful way to view METARs.">
 		<link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
