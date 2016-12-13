@@ -69,13 +69,26 @@ function getUserLocation() {
 		navigator.geolocation.getCurrentPosition(function(position) { // Getting location succeeded; do something with it!
 			var params = position.coords.latitude + "," + position.coords.longitude; // Add to parameters and fetch
 			fetchMetar(params); 
+		}, function(error) {
+			var raw = document.createElement('div');
+			raw.id = "raw";
+			switch(error.code) {
+				case error.PERMISSION_DENIED:
+					raw.innerHTML = "You didn't give this site access to your location. Try something else?<br><br>"
+					break;
+				case error.POSITION_UNAVAILABLE:
+					raw.innerHTML = "The site couldn't determine your location. Try something else?<br><br>"
+					break;
+				case error.TIMEOUT:
+					raw.innerHTML = "It took so long to get your location that the site died. Try something else?<br><br>"
+					break;
+				case error.UNKNOWN_ERROR:
+					raw.innerHTML = "You broke this site. Try something else?<br><br>"
+					break;
+			}
+			document.getElementById("location").appendChild(raw); // Add to the webpage!
+			document.getElementById('loading-animation').style.display = "none"; // Hide the loading animation
 		});
-	} else {
-		var raw = document.createElement('div');
-		raw.id = "raw";
-		raw.innerHTML = "Geolocation is not enabled in your browser! Try entering a station name.";
-		document.getElementById("location").appendChild(raw); // Add to the webpage!
-		document.getElementById('loading-animation').style.display = "none"; // Hide the loading animation
 	}
 }
 
