@@ -2,20 +2,31 @@
 	box-sizing: border-box; }
 
 /* This is for the background color */
-html, body {
-	padding: 0;
-	margin: 0;
+html {
 	height: 100%;
+	background-color: #1E90FF;
+	background-image: linear-gradient(120deg, #1E90FF, #87CEEB);
+}
+
+.elements{
+	margin-top: 15%;
+}
+
+.title {
+	margin-bottom: 2rem;
+	color: #fff;
+	font-family: "Merriweather", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	text-align: center;
+}
+
+.main-content {
+	padding: 0;
+	margin: 0 auto;
 	font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 16px;
 	line-height: 1.5;
 	color: #fff;
 	text-align: center;
-	background-color: #1E90FF;
-	background-image: linear-gradient(120deg, #1E90FF, #87CEEB);
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
 }
 
 /* Style the buttons */
@@ -39,6 +50,10 @@ html, body {
 	text-decoration: none;
 	background-color: rgba(255, 255, 255, 0.2);
 	border-color: rgba(255, 255, 255, 0.3); }
+
+#returnButton {
+	display: none;
+}
 
 #stationIdentifier{
 	margin-bottom: 2rem;
@@ -83,12 +98,6 @@ html, body {
 	}
 
 /* Style the title, tagline, instruction text */
-.project-name {
-	margin-top: 0;
-	margin-bottom: 2rem; 
-	font-family: "Merriweather", "Helvetica Neue", Helvetica, Arial, sans-serif;
-	}
-
 .instruction {
 	margin-bottom: 0.5rem;
 	font-weight: normal;

@@ -10,23 +10,28 @@
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
 	</head>
 	<body>
-		<section class="title">
-			<div id="headers">
-				<h1 class="project-name">Simple METAR</h1>
-			</div>
-		</section>
-		<section class="main-content">
-			<div class="instruction" id="main-instruction">
-				Input a station name, or use your current location.
-			</div>
-			<div id="input">
-				<input type="text" id="stationIdentifier" value="">
-				<a href="javascript:void(0)" class="btn" id="getMetarButton">Go!</a>
-			</div>
-			<div id="location">
-				<a href="javascript:void(0)" class="btn" id="useLocationButton">Use my location!</a>
-			</div>
-		</section>
+		<div class="elements">
+			<section class="title">
+				<div id="headers">
+					<h1 class="project-name">Simple METAR</h1>
+				</div>
+			</section>
+			<section class="main-content">
+				<div class="instruction" id="main-instruction">
+					Input a station name, or use your current location.
+				</div>
+				<div id="input">
+					<input type="text" id="stationIdentifier" value="" placeholder="e.g. CYOW...">
+					<a href="javascript:void(0)" class="btn" id="getMetarButton">Go!</a>
+				</div>
+				<div id="location">
+					<a href="javascript:void(0)" class="btn" id="useLocationButton">Use my location!</a>
+				</div>
+				<div>
+					<a href="javascript:void(0)" class="btn" id="returnButton">Another report</a>
+				</div>
+			</section>
+		</div>
 		<script type="text/javascript" src="scripts/script.js"></script>
 	</body>
 </html>
