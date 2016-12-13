@@ -104,37 +104,37 @@ html {
 /* Set top margin */
 @media (min-height: 61em) {
 	body {
-		margin-top: 50%;
+		margin-top: 30em;
 	}
 }
 
 @media (min-height: 51em) and (max-height: 60em) {
 	body {
-		margin-top: 15%;
+		margin-top: 20em;
 	}
 }
 
 @media screen and (min-height: 41em) and (max-height: 50em) {
 	body {
-		margin-top: 10%;
+		margin-top: 10em;
 	}
 }
 
 @media screen and (min-height: 31em) and (max-height: 40em) {
 	body {
-		margin-top: 5%;
+		margin-top: 3em;
 	}
 }
 
 @media screen and (min-height: 21em) and (max-height: 30em) {
 	body {
-		margin-top: 0%;
+		margin-top: 2em;
 	}
 }
 
 @media screen and (max-height: 20em) {
 	body {
-		margin-top: 0%;
+		margin-top: 1em;
 	}
 }
 
@@ -259,86 +259,87 @@ html {
 
 svg {
   max-width: 100%;
-  height: 50%;
+  height: 4em;
   display: block;
 }
 
 /* Paper Plane: Container */
 .plane-container {
-  max-width: 50%;
-  margin: 5% auto;
-  z-index: 3;
+	max-width: 50%;
+	max-height: 4em;
+	margin: auto;
+	z-index: 3;
 }
 
  /* Paper Plane: Image */
 .plane {
-  width: 100%;
-  max-height: 60px;
+	width: 100%;
+	max-height: 4em;
 }
 
 /* Paper Plane: Animation from http://codepen.io/ItsJonQ/pen/yvfDF/ */
 
 .plane-container {
-  -webkit-animation: paper-plane-scoping 2s alternate infinite;
-  -moz-animation: paper-plane-scoping 2s alternate infinite;
-  animation: paper-plane-scoping 2s alternate infinite;
+	-webkit-animation: paper-plane-scoping 2s alternate infinite;
+	-moz-animation: paper-plane-scoping 2s alternate infinite;
+	animation: paper-plane-scoping 2s alternate infinite;
 
-  -webkit-animation-timing-function: linear;
-  -moz-animation-timing-function: linear;
-  animation-timing-function: linear;
+	-webkit-animation-timing-function: linear;
+	-moz-animation-timing-function: linear;
+	animation-timing-function: linear;
 }
 
 @-webkit-keyframes paper-plane-scoping {
-  0% {
-    -webkit-transform: translateY(0px);
-    -moz-transform: translateY(0px);
-    transform: translateY(0px);
-  }
-  100% {
-    -webkit-transform: translateY(50%);
-    -moz-transform: translateY(50%);
-    transform: translateY(50%);
-  }
+	0% {
+		-webkit-transform: translateY(0px);
+		-moz-transform: translateY(0px);
+		transform: translateY(0px);
+	}
+	100% {
+		-webkit-transform: translateY(2em);
+		-moz-transform: translateY(2em);
+		transform: translateY(2em);
+	}
 }
 
 .plane {
-  -webkit-animation-timing-function: ease-in-out;
-  -moz-animation-timing-function: ease-in-out;
-  animation-timing-function: ease-in-out;
+	-webkit-animation-timing-function: ease-in-out;
+	-moz-animation-timing-function: ease-in-out;
+	animation-timing-function: ease-in-out;
 
-  -webkit-animation: paper-plane-soaring 2s forwards infinite;
-  -moz-animation: paper-plane-soaring 2s forwards infinite;
-  animation: paper-plane-soaring 2s forwards infinite;
+	-webkit-animation: paper-plane-soaring 2s forwards infinite;
+	-moz-animation: paper-plane-soaring 2s forwards infinite;
+	animation: paper-plane-soaring 2s forwards infinite;
 }
 @-webkit-keyframes paper-plane-soaring {
-  0% {
-    -webkit-transform: rotate(0deg);
-    -moz-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  40% {
-    -webkit-transform: rotate(5deg);
-    -moz-transform: rotate(5deg);
-    transform: rotate(5deg);
-  }
-  50% {
-    -webkit-transform: rotate(5deg);
-    -moz-transform: rotate(5deg);
-    transform: rotate(5deg);
-  }
-  60% {
-    -webkit-transform: rotate(-10deg);
-    -moz-transform: rotate(-10deg);
-    transform: rotate(-10deg);
-  }
-  70% {
-    -webkit-transform: rotate(-10deg);
-    -moz-transform: rotate(-10deg);
-    transform: rotate(-10deg);
-  }
-  100% {
-    -webkit-transform: rotate(0deg);
-    -moz-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
+	0% {
+		-webkit-transform: rotate(0deg);
+		-moz-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	40% {
+		-webkit-transform: rotate(5deg);
+		-moz-transform: rotate(5deg);
+		transform: rotate(5deg);
+	}
+	50% {
+		-webkit-transform: rotate(5deg);
+		-moz-transform: rotate(5deg);
+		transform: rotate(5deg);
+	}
+	60% {
+		-webkit-transform: rotate(-10deg);
+		-moz-transform: rotate(-10deg);
+		transform: rotate(-10deg);
+	}
+	70% {
+		-webkit-transform: rotate(-10deg);
+		-moz-transform: rotate(-10deg);
+		transform: rotate(-10deg);
+	}
+	100% {
+		-webkit-transform: rotate(0deg);
+		-moz-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
 }
