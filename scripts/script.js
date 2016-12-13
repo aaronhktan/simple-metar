@@ -1,10 +1,5 @@
 console.log("JS initialized");
 
-//Prevent bounce effect on iOS
-document.ontouchmove = function(event){
-    event.preventDefault();
-}
-
 var getMetarButton = document.getElementById("getMetarButton"), useLocationButton = document.getElementById("useLocationButton"), returnButton = document.getElementById("returnButton");
 
 // Set up a listener for given station identifier button click
