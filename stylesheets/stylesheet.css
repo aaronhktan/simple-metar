@@ -83,7 +83,7 @@ html {
 @media screen and (max-width: 42em) {
 	.btn {
 		display: block;
-		width: 75%;
+		width: 85%;
 		padding: 0.75rem;
 		font-size: 0.9rem; 
 		margin-top: 0.5rem;
@@ -96,7 +96,7 @@ html {
 	#stationIdentifier {
 		margin-bottom: 0rem;
 		padding: 1rem;
-		width: 75%;
+		width: 85%;
 		font-size: 1.5rem; }
 	}
 
