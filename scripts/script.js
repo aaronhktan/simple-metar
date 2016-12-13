@@ -70,6 +70,7 @@ function getUserLocation() {
 			var params = position.coords.latitude + "," + position.coords.longitude; // Add to parameters and fetch
 			fetchMetar(params); 
 		}, function(error) {
+			console.log(error.code);
 			var raw = document.createElement('div');
 			raw.id = "raw";
 			switch(error.code) {
@@ -82,7 +83,7 @@ function getUserLocation() {
 				case error.TIMEOUT:
 					raw.innerHTML = "It took so long to get your location that the site died. Try something else?<br><br>"
 					break;
-				case error.UNKNOWN_ERROR:
+				default:
 					raw.innerHTML = "You broke this site. Try something else?<br><br>"
 					break;
 			}
