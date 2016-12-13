@@ -5,6 +5,7 @@
 html {
 	background-color: #1E90FF;
 	background-image: linear-gradient(120deg, #1E90FF, #87CEEB);
+	min-height: 100%;
 }
 
 .title {
