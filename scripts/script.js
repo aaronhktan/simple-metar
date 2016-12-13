@@ -21,6 +21,12 @@ returnButton.addEventListener('click', function(event) {
 	resetElements();
 })
 
+document.getElementById('stationIdentifier').onkeypress=function(e){
+    if (e.keyCode == 13){
+        document.getElementById('getMetarButton').click();
+    }
+}
+
 // A function to fetch things from a server
 function request(URL) {
 	var xmlRequest = new XMLHttpRequest(); // Gets stuff from server

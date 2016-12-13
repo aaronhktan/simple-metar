@@ -47,12 +47,13 @@ html {
 	background-color: rgba(255, 255, 255, 0.2);
 	border-color: rgba(255, 255, 255, 0.3); }
 
+/* Hide unnecessary buttons */
 #returnButton {
 	display: none;
 }
 
 .sk-folding-cube {
-	display:none;
+	display: none;
 }
 
 #stationIdentifier{
@@ -109,13 +110,13 @@ html {
 
 @media screen and (min-height: 41em) and (max-height: 50em) {
 	body {
-		margin-top: 15%;
+		margin-top: 10%;
 	}
 }
 
 @media screen and (min-height: 31em) and (max-height: 40em) {
 	body {
-		margin-top: 10%;
+		margin-top: 5%;
 	}
 }
 
@@ -158,7 +159,7 @@ html {
 		font-size: 1rem; }
 	}
 
-/* Folding Cube loading animation */
+/* Folding Cube loading animation from http://tobiasahlin.com/spinkit/ */
 
 .sk-folding-cube {
   margin: 20px auto;
@@ -245,5 +246,92 @@ html {
     -webkit-transform: perspective(140px) rotateY(180deg);
             transform: perspective(140px) rotateY(180deg);
     opacity: 0; 
+  }
+}
+
+/* Paper Plane Animation */
+
+svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/*Paper Plane: Container*/
+.plane-container {
+  width: 200px;
+  margin: 0px auto;
+  z-index: 3;
+}
+ /*Paper Plane: Image*/
+.plane {
+  width: 100%;
+  height: 60px;
+}
+
+/* Paper Plane: Animation from http://codepen.io/ItsJonQ/pen/yvfDF/ */
+
+.plane-container {
+  -webkit-animation: paper-plane-scoping 2s alternate infinite;
+  -moz-animation: paper-plane-scoping 2s alternate infinite;
+  animation: paper-plane-scoping 2s alternate infinite;
+
+  -webkit-animation-timing-function: linear;
+  -moz-animation-timing-function: linear;
+  animation-timing-function: linear;
+}
+
+@-webkit-keyframes paper-plane-scoping {
+  0% {
+    -webkit-transform: translateY(0px);
+    -moz-transform: translateY(0px);
+    transform: translateY(0px);
+  }
+  100% {
+    -webkit-transform: translateY(50%);
+    -moz-transform: translateY(50%);
+    transform: translateY(50%);
+  }
+}
+
+.plane {
+  -webkit-animation-timing-function: ease-in-out;
+  -moz-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+
+  -webkit-animation: paper-plane-soaring 2s forwards infinite;
+  -moz-animation: paper-plane-soaring 2s forwards infinite;
+  animation: paper-plane-soaring 2s forwards infinite;
+}
+@-webkit-keyframes paper-plane-soaring {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  40% {
+    -webkit-transform: rotate(5deg);
+    -moz-transform: rotate(5deg);
+    transform: rotate(5deg);
+  }
+  50% {
+    -webkit-transform: rotate(5deg);
+    -moz-transform: rotate(5deg);
+    transform: rotate(5deg);
+  }
+  60% {
+    -webkit-transform: rotate(-10deg);
+    -moz-transform: rotate(-10deg);
+    transform: rotate(-10deg);
+  }
+  70% {
+    -webkit-transform: rotate(-10deg);
+    -moz-transform: rotate(-10deg);
+    transform: rotate(-10deg);
+  }
+  100% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    transform: rotate(0deg);
   }
 }
