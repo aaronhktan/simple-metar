@@ -14,7 +14,12 @@ getMetarButton.addEventListener('click', function(event) {
 
 // Set up event listener for using location button click
 useLocationButton.addEventListener('click', function(event) {
-	console.log("The use location button has been pressed!");
+	var station = document.getElementById("stationIdentifier").value;
+	document.getElementById("main-instruction").style.display = "none";
+	document.getElementById("stationIdentifier").style.display = "none";
+	document.getElementById("getMetarButton").style.display = "none";
+	document.getElementById("useLocationButton").style.display = "none";
+	getUserLocation();
 });
 
 // Set up even listener for using the return button click
@@ -54,9 +59,9 @@ function resetElements() {
 }
 
 // Function to get METAR provided station identifer
-function fetchMetar(station) {
+function fetchMetar(params) {
 
-	var URL = "http://avwx.rest/api/metar/" + station; // This is the URL
+	var URL = "http://avwx.rest/api/metar/" + params; // This is the URL
 
 	var raw = document.createElement('div'); // This creates a new div to display the raw METAR
 	raw.id = "raw";
@@ -77,4 +82,13 @@ function fetchMetar(station) {
 		document.getElementById("location").appendChild(raw);
 		document.getElementById("returnButton").style.display = "inline-block";
     });
+}
+
+function getUserLocation() {
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(function(position) {
+			var params = position.coords.latitude + "," + position.coords.longitude;
+			fetchMetar(params); 
+		});
+	}
 }
