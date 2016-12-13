@@ -58,6 +58,16 @@ function resetElements() {
 	document.getElementById("useLocationButton").style.display = "block";
 }
 
+// Function to get user location
+function getUserLocation() {
+	if (navigator.geolocation) { // If the browser supports getting from geolocation then get location
+		navigator.geolocation.getCurrentPosition(function(position) { // Getting location succeeded; do something with it!
+			var params = position.coords.latitude + "," + position.coords.longitude; // Add to parameters and fetch
+			fetchMetar(params); 
+		});
+	}
+}
+
 // Function to get METAR provided station identifer
 function fetchMetar(params) {
 
@@ -82,13 +92,4 @@ function fetchMetar(params) {
 		document.getElementById("location").appendChild(raw);
 		document.getElementById("returnButton").style.display = "inline-block";
     });
-}
-
-function getUserLocation() {
-	if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(function(position) {
-			var params = position.coords.latitude + "," + position.coords.longitude;
-			fetchMetar(params); 
-		});
-	}
 }
