@@ -62,7 +62,7 @@ function resetElements() {
 	document.getElementById("main-instruction").style.display = "block";
 	document.getElementById("stationIdentifier").style.display = "inline-block";
 	document.getElementById("getMetarButton").style.display = "inline-block";
-	document.getElementById("useLocationButton").style.display = "inline-block";
+	document.getElementById("useLocationButton").style.display = "inline";
 	document.getElementById("returnButton").style.display = "none";
 	document.getElementById('loading-animation').style.display = "none";
 	document.getElementById("raw").parentNode.removeChild(document.getElementById("raw"));
@@ -111,7 +111,7 @@ function fetchMetar(params) {
 		if (metar["Raw-Report"] !== undefined) { // If there is a raw-report field in the JSON, then show that in the text
 			raw.innerHTML = metar["Raw-Report"] + "<br><br>";
 		} else { // If there isn't, tell the user that their query was invalid
-			raw.innerHTML = "Your request was invalid!";
+			raw.innerHTML = "Your request was invalid!" + "<br><br>";
 		}
 
 		document.getElementById("location").appendChild(raw); // Add to the webpage!
