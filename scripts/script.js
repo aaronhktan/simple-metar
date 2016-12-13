@@ -70,6 +70,12 @@ function getUserLocation() {
 			var params = position.coords.latitude + "," + position.coords.longitude; // Add to parameters and fetch
 			fetchMetar(params); 
 		});
+	} else {
+		var raw = document.createElement('div');
+		raw.id = "raw";
+		raw.innerHTML = "Geolocation is not enabled in your browser! Try entering a station name.";
+		document.getElementById("location").appendChild(raw); // Add to the webpage!
+		document.getElementById('loading-animation').style.display = "none"; // Hide the loading animation
 	}
 }
 
@@ -90,7 +96,7 @@ function fetchMetar(params) {
 		}
 
 		document.getElementById("location").appendChild(raw); // Add to the webpage!
-		document.getElementById('loading-animation').style.display = "none"; //Hide the loading animation
+		document.getElementById('loading-animation').style.display = "none"; // Hide the loading animation
 	}).catch(function(reason) { // This means that the query was rejected for some reason
 		console.log(reason); // Log the reason and tell the user
 		raw.innerHTML = "Your request was invalid!" + "<br><br>";
