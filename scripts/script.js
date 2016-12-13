@@ -24,6 +24,7 @@ returnButton.addEventListener('click', function(event) {
 document.getElementById('stationIdentifier').onkeypress=function(e){
     if (e.keyCode == 13){
         document.getElementById('getMetarButton').click();
+        document.getElementById('stationIdentifier').blur(); // To hide the software keyboard after user presses enter
     }
 }
 
