@@ -9,6 +9,8 @@ getMetarButton.addEventListener('click', function(event) {
 	document.getElementById("stationIdentifier").style.display = "none";
 	document.getElementById("getMetarButton").style.display = "none";
 	document.getElementById("useLocationButton").style.display = "none";
+	document.getElementById("loading-animation").style.display = "inline-block";
+	document.getElementById("returnButton").style.display = "inline-block"; // Show the return button
 	fetchMetar(station);
 });
 
@@ -19,6 +21,8 @@ useLocationButton.addEventListener('click', function(event) {
 	document.getElementById("stationIdentifier").style.display = "none";
 	document.getElementById("getMetarButton").style.display = "none";
 	document.getElementById("useLocationButton").style.display = "none";
+	document.getElementById("loading-animation").style.display = "inline-block";
+	document.getElementById("returnButton").style.display = "inline-block"; // Show the return button
 	getUserLocation();
 });
 
@@ -85,11 +89,11 @@ function fetchMetar(params) {
 		}
 
 		document.getElementById("location").appendChild(raw); // Add to the webpage!
-		document.getElementById("returnButton").style.display = "inline-block"; // Show the return button
+		document.getElementById('loading-animation').style.display = "none"; //Hide the loading animation
 	}).catch(function(reason) { // This means that the query was rejected for some reason
 		console.log(reason); // Log the reason and tell the user
 		raw.innerHTML = "Your request was invalid!" + "<br><br>";
 		document.getElementById("location").appendChild(raw);
-		document.getElementById("returnButton").style.display = "inline-block";
+		document.getElementById('loading-animation').style.display = "none"; //Hide the loading animation
     });
 }
