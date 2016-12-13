@@ -5,36 +5,20 @@ var getMetarButton = document.getElementById("getMetarButton"), useLocationButto
 // Set up a listener for given station identifier button click
 getMetarButton.addEventListener('click', function(event) {
 	var station = document.getElementById("stationIdentifier").value;
-	document.getElementById("main-instruction").style.display = "none";
-	document.getElementById("stationIdentifier").style.display = "none";
-	document.getElementById("getMetarButton").style.display = "none";
-	document.getElementById("useLocationButton").style.display = "none";
-	document.getElementById("loading-animation").style.display = "inline-block";
-	document.getElementById("returnButton").style.display = "inline-block"; // Show the return button
+	hideElements();
 	fetchMetar(station);
 });
 
 // Set up event listener for using location button click
 useLocationButton.addEventListener('click', function(event) {
 	var station = document.getElementById("stationIdentifier").value;
-	document.getElementById("main-instruction").style.display = "none";
-	document.getElementById("stationIdentifier").style.display = "none";
-	document.getElementById("getMetarButton").style.display = "none";
-	document.getElementById("useLocationButton").style.display = "none";
-	document.getElementById("loading-animation").style.display = "inline-block";
-	document.getElementById("returnButton").style.display = "inline-block"; // Show the return button
+	hideElements();
 	getUserLocation();
 });
 
 // Set up even listener for using the return button click
 returnButton.addEventListener('click', function(event) {
-	document.getElementById("main-instruction").style.display = "block";
-	document.getElementById("stationIdentifier").style.display = "inline-block";
-	document.getElementById("getMetarButton").style.display = "inline-block";
-	document.getElementById("useLocationButton").style.display = "inline-block";
-	document.getElementById("returnButton").style.display = "none";
-	document.getElementById('loading-animation').style.display = "none";
-	document.getElementById("raw").parentNode.removeChild(document.getElementById("raw"));
+	resetElements();
 })
 
 // A function to fetch things from a server
@@ -56,11 +40,25 @@ function request(URL) {
 	return resultPromise; // Return this promise
 }
 
+// A function to hide original elements
+function hideElements() {
+	document.getElementById("main-instruction").style.display = "none";
+	document.getElementById("stationIdentifier").style.display = "none";
+	document.getElementById("getMetarButton").style.display = "none";
+	document.getElementById("useLocationButton").style.display = "none";
+	document.getElementById("loading-animation").style.display = "inline-block";
+	document.getElementById("returnButton").style.display = "inline-block"; // Show the return button
+}
+
+// A function to hide/destroy newly created elements and to show original elements
 function resetElements() {
 	document.getElementById("main-instruction").style.display = "block";
 	document.getElementById("stationIdentifier").style.display = "inline-block";
 	document.getElementById("getMetarButton").style.display = "inline-block";
-	document.getElementById("useLocationButton").style.display = "block";
+	document.getElementById("useLocationButton").style.display = "inline-block";
+	document.getElementById("returnButton").style.display = "none";
+	document.getElementById('loading-animation').style.display = "none";
+	document.getElementById("raw").parentNode.removeChild(document.getElementById("raw"));
 }
 
 // Function to get user location
@@ -69,7 +67,7 @@ function getUserLocation() {
 		navigator.geolocation.getCurrentPosition(function(position) { // Getting location succeeded; do something with it!
 			var params = position.coords.latitude + "," + position.coords.longitude; // Add to parameters and fetch
 			fetchMetar(params); 
-		}, function(error) {
+		}, function(error) { // Something bad has happened; show to the user
 			console.log(error.code);
 			var raw = document.createElement('div');
 			raw.id = "raw";
