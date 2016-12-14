@@ -102,37 +102,55 @@ html {
 	}
 
 /* Set top margin */
-@media (min-height: 61em) {
+@media (min-height: 60em) {
 	body {
-		margin-top: 30em;
+		margin-top: 15em;
 	}
 }
 
-@media (min-height: 51em) and (max-height: 60em) {
+@media (min-height: 50em) and (max-height: 60em) {
 	body {
-		margin-top: 20em;
+		margin-top: 15em;
 	}
 }
 
-@media screen and (min-height: 41em) and (max-height: 50em) {
+@media screen and (min-height: 45em) and (max-height: 50em) {
 	body {
 		margin-top: 10em;
 	}
 }
 
-@media screen and (min-height: 31em) and (max-height: 40em) {
+@media screen and (min-height: 38em) and (max-height: 45em) and (min-width: 42em) {
+	body {
+		margin-top: 7em;
+	}
+}
+
+@media screen and (min-height: 38em) and (max-height: 45em) and (max-width: 42em) {
+	body {
+		margin-top: 7em;
+	}
+}
+
+@media screen and (min-height: 30em) and (max-height: 38em) and (min-width: 42em) {
+	body {
+		margin-top: 5em;
+	}
+}
+
+@media screen and (min-height: 30em) and (max-height: 38em) and (max-width: 42em) {
 	body {
 		margin-top: 3em;
 	}
 }
 
-@media screen and (min-height: 21em) and (max-height: 30em) {
+@media screen and (max-height: 30em) and (min-width: 42em) {
 	body {
 		margin-top: 2em;
 	}
 }
 
-@media screen and (max-height: 20em) {
+@media screen and (max-height: 30em) and (max-width: 42em) {
 	body {
 		margin-top: 1em;
 	}
@@ -160,7 +178,7 @@ html {
 
 @media screen and (max-width: 42em) {
 	.project-name {
-		font-size: 2.5rem; } 
+		font-size: 2rem; } 
 	.instruction {
 		font-size: 1rem; }
 	}
@@ -277,7 +295,7 @@ svg {
 	}
 }
 
-@media screen and (min-height: 41em) {
+@media screen and (min-height: 40em) {
 	.plane-container {
 		max-width: 50%;
 		max-height: 3em;
