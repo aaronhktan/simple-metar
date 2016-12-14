@@ -19,10 +19,26 @@ html {
 	padding: 0;
 	margin: 0 auto;
 	font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 16px;
+	font-size: 0.9rem;
 	line-height: 1.5;
 	color: #fff;
 	text-align: center;
+}
+
+/* Style the footer */
+.footer {
+	font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 12px;
+	line-height: 1.5;
+	color: #fff;
+}
+
+.footer a {
+	font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 12px;
+	line-height: 1.5;
+	color: #fff;
+	text-decoration: underline;
 }
 
 /* Style the buttons */
@@ -70,6 +86,10 @@ html {
 	#stationIdentifier {
 		font-size: 2.0rem;
 		padding: 0.4rem;}
+	.footer {
+		position: absolute;
+		bottom: 1em;
+		right: 1em; }
 	}
 
 @media screen and (min-width: 42em) and (max-width: 64em) {
@@ -79,6 +99,9 @@ html {
 	#stationIdentifier {
 		padding: 0.45rem  0.5rem;
 		font-size: 1.5rem; }
+	.footer {
+		display: block;
+		text-align: center; }
 	}
 
 @media screen and (max-width: 42em) {
@@ -99,6 +122,9 @@ html {
 		padding: 1rem;
 		width: 85%;
 		font-size: 1.5rem; }
+	.footer {
+		display: block;
+		text-align: center; }
 	}
 
 /* Set top margin */
