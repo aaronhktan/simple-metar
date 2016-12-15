@@ -1,9 +1,10 @@
 console.log("JS initialized");
 
-var getMetarButton = document.getElementById("getMetarButton"), useLocationButton = document.getElementById("useLocationButton"), returnButton = document.getElementById("returnButton");
+var getMetarButton = document.getElementById("getMetarButton"), useLocationButton = document.getElementById("useLocationButton"), returnButton = document.getElementById("returnButton"), cancelled = false;
 
 // Set up a listener for given station identifier button click
 getMetarButton.addEventListener('click', function(event) {
+	cancelled = false;
 	var station = document.getElementById("stationIdentifier").value;
 	hideElements();
 	fetchMetar(station);
@@ -11,6 +12,7 @@ getMetarButton.addEventListener('click', function(event) {
 
 // Set up event listener for using location button click
 useLocationButton.addEventListener('click', function(event) {
+	cancelled = false;
 	var station = document.getElementById("stationIdentifier").value;
 	hideElements();
 	getUserLocation();
@@ -18,14 +20,15 @@ useLocationButton.addEventListener('click', function(event) {
 
 // Set up even listener for using the return button click
 returnButton.addEventListener('click', function(event) {
+	cancelled = true;
 	resetElements();
 })
 
 document.getElementById('stationIdentifier').onkeypress=function(e){
-    if (e.keyCode == 13){
-        document.getElementById('getMetarButton').click();
-        document.getElementById('stationIdentifier').blur(); // To hide the software keyboard after user presses enter
-    }
+	if (e.keyCode == 13){
+		document.getElementById('getMetarButton').click();
+		document.getElementById('stationIdentifier').blur(); // To hide the software keyboard after user presses enter
+	}
 }
 
 // A function to fetch things from a server
@@ -68,6 +71,13 @@ function resetElements() {
 	document.getElementById("raw").parentNode.removeChild(document.getElementById("raw"));
 }
 
+// A function to add an element to the page
+function addElement(element) {
+	if (!cancelled) {
+		document.getElementById("location").appendChild(element);
+	}
+}
+
 // Function to get user location
 function getUserLocation() {
 	if (navigator.geolocation) { // If the browser supports getting from geolocation then get location
@@ -92,7 +102,7 @@ function getUserLocation() {
 					raw.innerHTML = "You broke this site. Try something else?<br><br>"
 					break;
 			}
-			document.getElementById("location").appendChild(raw); // Add to the webpage!
+			addElement(raw); // Add to the webpage!
 			document.getElementById('loading-animation').style.display = "none"; // Hide the loading animation
 		});
 	}
@@ -114,12 +124,12 @@ function fetchMetar(params) {
 			raw.innerHTML = "Your request was invalid!" + "<br><br>";
 		}
 
-		document.getElementById("location").appendChild(raw); // Add to the webpage!
+		addElement(raw); // Add to the webpage!
 		document.getElementById('loading-animation').style.display = "none"; // Hide the loading animation
 	}).catch(function(reason) { // This means that the query was rejected for some reason
 		console.log(reason); // Log the reason and tell the user
 		raw.innerHTML = "Your request was invalid!" + "<br><br>";
-		document.getElementById("location").appendChild(raw);
+		addElement(raw); // Add to the webpage!
 		document.getElementById('loading-animation').style.display = "none"; //Hide the loading animation
-    });
+	});
 }
