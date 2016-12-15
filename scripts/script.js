@@ -62,7 +62,7 @@ function resetElements() {
 	document.getElementById("main-instruction").style.display = "block";
 	document.getElementById("stationIdentifier").style.display = "inline-block";
 	document.getElementById("getMetarButton").style.display = "inline-block";
-	document.getElementById("useLocationButton").style.display = "inline";
+	document.getElementById("useLocationButton").style.display = "inline-block";
 	document.getElementById("returnButton").style.display = "none";
 	document.getElementById('loading-animation').style.display = "none";
 	document.getElementById("raw").parentNode.removeChild(document.getElementById("raw"));
