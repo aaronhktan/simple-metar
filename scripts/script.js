@@ -93,7 +93,6 @@ function getUserLocation() {
 	if (navigator.geolocation) { // If the browser supports getting from geolocation then get location
 		document.getElementById("loading-text").innerHTML = "Getting your location..."
 		navigator.geolocation.getCurrentPosition(function(position) { // Getting location succeeded; do something with it!
-			document.getElementById("loading-text").innerHTML = "Fetching METAR..."
 			var params = position.coords.latitude + "," + position.coords.longitude; // Add to parameters and fetch
 			fetchMetar(params);
 		}, function(error) { // Something bad has happened; show to the user
@@ -111,6 +110,8 @@ function getUserLocation() {
 function fetchMetar(params) {
 
 	var URL = "https://avwx.rest/api/metar/" + params + "?options=info,translate"; // This is the URL with options (extra info and METAR translation)
+
+	document.getElementById("loading-text").innerHTML = "Fetching METAR..." // Add loading text
 
 	// Make some divs!
 	var metarDiv = document.createElement('div'); // This creates a new div to display the METAR
