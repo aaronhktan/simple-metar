@@ -22,6 +22,7 @@ useLocationButton.addEventListener('click', function(event) {
 returnButton.addEventListener('click', function(event) {
 	cancelled = true;
 	resetElements();
+	hideLoading();
 })
 
 document.getElementById('stationIdentifier').onkeypress=function(e){
@@ -56,6 +57,7 @@ function hideElements() {
 	document.getElementById("stationIdentifier").style.display = "none";
 	document.getElementById("getMetarButton").style.display = "none";
 	document.getElementById("useLocationButton").style.display = "none";
+	document.getElementById("loading-text").style.display = "block";
 	document.getElementById("loading-animation").style.display = "inline-block";
 	document.getElementById("returnButton").style.display = "inline-block"; // Show the return button
 }
@@ -67,43 +69,40 @@ function resetElements() {
 	document.getElementById("getMetarButton").style.display = "inline-block";
 	document.getElementById("useLocationButton").style.display = "inline-block";
 	document.getElementById("returnButton").style.display = "none";
-	document.getElementById('loading-animation').style.display = "none";
-	document.getElementById("raw").parentNode.removeChild(document.getElementById("raw"));
+	document.getElementById("metarDiv").parentNode.removeChild(document.getElementById("metarDiv"));
+	document.getElementById("translatedMETARDiv").parentNode.removeChild(document.getElementById("translatedMETARDiv"));
+	document.getElementById("METARText").parentNode.removeChild(document.getElementById("METARText"));
+	hideLoading();
+}
+
+// A function to hide the loading elements
+function hideLoading() {
+	document.getElementById("loading-text").style.display = "none"; // Hide the loading text
+	document.getElementById('loading-animation').style.display = "none"; //Hide the loading animation
 }
 
 // A function to add an element to the page
 function addElement(element) {
 	if (!cancelled) {
-		document.getElementById("location").appendChild(element);
+		document.getElementById("metarText").appendChild(element);
 	}
 }
 
 // Function to get user location
 function getUserLocation() {
 	if (navigator.geolocation) { // If the browser supports getting from geolocation then get location
+		document.getElementById("loading-text").innerHTML = "Getting your location..."
 		navigator.geolocation.getCurrentPosition(function(position) { // Getting location succeeded; do something with it!
+			document.getElementById("loading-text").innerHTML = "Fetching METAR..."
 			var params = position.coords.latitude + "," + position.coords.longitude; // Add to parameters and fetch
-			fetchMetar(params); 
+			fetchMetar(params);
 		}, function(error) { // Something bad has happened; show to the user
 			console.log(error.code);
-			var raw = document.createElement('div');
-			raw.id = "raw";
-			switch(error.code) {
-				case error.PERMISSION_DENIED:
-					raw.innerHTML = "You didn't give this site access to your location. Try something else?<br><br>"
-					break;
-				case error.POSITION_UNAVAILABLE:
-					raw.innerHTML = "The site couldn't determine your location. Try something else?<br><br>"
-					break;
-				case error.TIMEOUT:
-					raw.innerHTML = "It took so long to get your location that the site died. Try something else?<br><br>"
-					break;
-				default:
-					raw.innerHTML = "You broke this site. Try something else?<br><br>"
-					break;
-			}
-			addElement(raw); // Add to the webpage!
-			document.getElementById('loading-animation').style.display = "none"; // Hide the loading animation
+			var metarDiv = document.createElement('div');
+			metarDiv.id = "metarDiv";
+			metarDiv.innerHTML = "This site couldn't determine your location. Try again?<br><br>"
+			addElement(metarDiv); // Add to the webpage!
+			hideLoading();
 		});
 	}
 }
@@ -111,25 +110,63 @@ function getUserLocation() {
 // Function to get METAR provided station identifer
 function fetchMetar(params) {
 
-	var URL = "https://avwx.rest/api/metar/" + params; // This is the URL
+	var URL = "https://avwx.rest/api/metar/" + params + "?options=info,translate"; // This is the URL with options (extra info and METAR translation)
 
-	var raw = document.createElement('div'); // This creates a new div to display the raw METAR
-	raw.id = "raw";
+	// Make some divs!
+	var metarDiv = document.createElement('div'); // This creates a new div to display the METAR
+	metarDiv.id = "metarDiv";
+	var translatedMETARDiv = document.createElement('div'); // This creates a new div to display the title
+	translatedMETARDiv.id = "translatedMETARDiv";
+	var METARText = document.createElement('div'); // Creates a div to hold the translated elements
+	METARText.id = "METARText"
+	var translatedMETARText = new Array(2);  // This creates three spans to show the translated METAR
+	for (var i = 0; i < 3; i++) {
+		translatedMETARText[i] = document.createElement('span');
+		translatedMETARText[i].className = "translatedMETARText";
+	}
+
 	request(URL).then(function(result) { // Wait for promise to be fulfilled, and then do things with the response
 		metar = JSON.parse(result); // Parse JSON
+		if (metar["Raw-Report"] !== undefined && metar.Info !== undefined && metar.Translations !== undefined) { // If there is a raw-report field in the JSON, then show that in the text
 
-		if (metar["Raw-Report"] !== undefined) { // If there is a raw-report field in the JSON, then show that in the text
-			raw.innerHTML = metar["Raw-Report"] + "<br><br>";
+			metarDiv.innerHTML = "<b>" + metar["Raw-Report"] + "</b><br><br>"; // Show the raw METAR
+			
+			translatedMETARDiv.innerHTML = "Translated METAR:" + "<br><br>"; // Title for the translated METAR
+
+			translatedMETARText[0].innerHTML += "<b>City</b>: " + metar.Info.City + "<br>"; // Information about METAR Station in first span
+			translatedMETARText[0].innerHTML += "<b>Airport Name</b>: " + metar.Info.Name + "<br>";
+			translatedMETARText[0].innerHTML += "<b>Altitude</b>: " + metar.Info.Elevation  + "m<br>"; 
+
+			var numberOfElements = 0;
+			for (var key in metar.Translations) { // Iterate through every element in the translated METAR section and add to second and third spans
+				if (metar.Translations[key] != "") {
+					numberOfElements++;
+					if (numberOfElements < Object.keys(metar.Translations).length / 2) {
+						translatedMETARText[1].innerHTML += "<b>" + key + "</b>: " + metar.Translations[key] + "<br>"; // Get and display element in middle div if there are fewer than one half displayed
+					} else {
+						translatedMETARText[2].innerHTML += "<b>" + key + "</b>: " + metar.Translations[key] + "<br>"; // Otherwise, put it in the second div
+					}
+				}
+			}
+
 		} else { // If there isn't, tell the user that their query was invalid
-			raw.innerHTML = "Your request was invalid!" + "<br><br>";
+			metarDiv.innerHTML = "Your request was invalid!" + "<br><br>";
 		}
 
-		addElement(raw); // Add to the webpage!
-		document.getElementById('loading-animation').style.display = "none"; // Hide the loading animation
+		addElement(metarDiv); // Add to the webpage!
+
+		// Add the new spans to the div and then add the div
+		addElement(translatedMETARDiv);
+		for (var i = 0; i < 3; i++) {
+			METARText.appendChild(translatedMETARText[i]);
+		}
+		addElement(METARText);
+
+		hideLoading(); // Hide the loading text
 	}).catch(function(reason) { // This means that the query was rejected for some reason
 		console.log(reason); // Log the reason and tell the user
-		raw.innerHTML = "Your request was invalid!" + "<br><br>";
-		addElement(raw); // Add to the webpage!
-		document.getElementById('loading-animation').style.display = "none"; //Hide the loading animation
+		metarDiv.innerHTML = "Your request was invalid!" + "<br><br>";
+		addElement(metarDiv); // Add to the webpage!
+		hideLoading();
 	});
 }
