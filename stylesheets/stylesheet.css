@@ -247,6 +247,7 @@ html {
 		margin: auto; }
 	#METARText{
 		margin: auto;
+		padding-bottom: 2em;
 	}
 	.translatedMETARText {
 		font-size: 0.9rem;
@@ -268,6 +269,7 @@ html {
 		margin: auto; }
 	#METARText{
 		margin: auto;
+		padding-bottom: 2em;
 	}
 	.translatedMETARText {
 		font-size: 0.9rem;
