@@ -26,46 +26,45 @@ html {
 }
 
 /* Set top margin */
-/* Set top margin */
 @media (min-height: 60em) {
 	body {
-		margin-top: 8em;
+		margin-top: 15em;
 	}
 }
 
 @media (min-height: 50em) and (max-height: 60em) {
 	body {
-		margin-top: 8em;
+		margin-top: 15em;
 	}
 }
 
 @media screen and (min-height: 45em) and (max-height: 50em) {
 	body {
-		margin-top: 5em;
+		margin-top: 8em;
 	}
 }
 
 @media screen and (min-height: 38em) and (max-height: 45em) and (min-width: 42em) {
 	body {
-		margin-top: 4em;
+		margin-top: 8em;
 	}
 }
 
 @media screen and (min-height: 38em) and (max-height: 45em) and (max-width: 42em) {
 	body {
-		margin-top: 4em;
+		margin-top: 8em;
 	}
 }
 
 @media screen and (min-height: 30em) and (max-height: 38em) and (min-width: 42em) {
 	body {
-		margin-top: 3em;
+		margin-top: 4em;
 	}
 }
 
 @media screen and (min-height: 30em) and (max-height: 38em) and (max-width: 42em) {
 	body {
-		margin-top: 2em;
+		margin-top: 3em;
 	}
 }
 
