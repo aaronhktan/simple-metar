@@ -192,7 +192,9 @@ body {
 
 /* Style the title, tagline, instruction text */
 .instruction {
-	margin-bottom: 0.5rem;
+	max-width: 85%;
+	margin: auto;
+	padding-bottom: 1rem;
 	font-weight: normal;
 }
 
