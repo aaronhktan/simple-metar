@@ -1,6 +1,6 @@
 console.log("JS initialized");
 
-var getMetarButton = document.getElementById("getMetarButton"), useLocationButton = document.getElementById("useLocationButton"), returnButton = document.getElementById("returnButton"), cancelled = false;
+var getMetarButton = document.getElementById("getMetarButton"), useLocationButton = document.getElementById("useLocationButton"), returnButton = document.getElementById("returnButton"), cancelled = false, ended = false, failed = false, failedOnce = false;
 
 // Set up a listener for given station identifier button click
 getMetarButton.addEventListener('click', function(event) {
@@ -20,7 +20,10 @@ useLocationButton.addEventListener('click', function(event) {
 
 // Set up even listener for using the return button click
 returnButton.addEventListener('click', function(event) {
-	cancelled = true;
+	if (!ended) {
+		cancelled = true;
+	}
+	console.log("the value of cancelled is " + cancelled);
 	resetElements();
 	hideLoading();
 })
@@ -71,10 +74,17 @@ function resetElements() {
 	document.getElementById("getMetarButton").style.display = "inline-block";
 	document.getElementById("useLocationButton").style.display = "inline-block";
 	document.getElementById("returnButton").style.display = "none";
-	document.getElementById("metarDiv").parentNode.removeChild(document.getElementById("metarDiv"));
-	document.getElementById("translatedMETARDiv").parentNode.removeChild(document.getElementById("translatedMETARDiv"));
-	document.getElementById("METARText").parentNode.removeChild(document.getElementById("METARText"));
 	hideLoading();
+	document.getElementById("metarDiv").parentNode.removeChild(document.getElementById("metarDiv"));
+	if (!failed && !cancelled) {
+		document.getElementById("translatedMETARDiv").parentNode.removeChild(document.getElementById("translatedMETARDiv"));
+		document.getElementById("METARText").parentNode.removeChild(document.getElementById("METARText"));
+	} else {
+		failed = false;
+	}
+	if (failedOnce) {
+		failedOnce = false;
+	}
 }
 
 // A function to hide the loading elements
@@ -83,8 +93,18 @@ function hideLoading() {
 	document.getElementById('loading-animation').style.display = "none"; //Hide the loading animation
 }
 
+// A function to show failed elements
+function showFailed(reason, element) {
+	console.log(reason);
+	failed = true;
+	hideLoading();
+	element.innerHTML = reason + "<br><br>";
+	addElement(element); // Add to the webpage!
+}
+
 // A function to add an element to the page
 function addElement(element) {
+	console.log("The value of cancelled is " + cancelled);
 	if (!cancelled) {
 		document.getElementById("metarText").appendChild(element);
 	}
@@ -113,15 +133,18 @@ function fetchMetar(params) {
 
 	var URL = "https://avwx.rest/api/metar/" + params + "?options=info,translate"; // This is the URL with options (extra info and METAR translation)
 
-	document.getElementById("loading-text").innerHTML = "Fetching METAR..." // Add loading text
+	document.getElementById("loading-text").innerHTML = "Fetching METAR..."; // Add loading text
 
 	// Make some divs!
 	var metarDiv = document.createElement('div'); // This creates a new div to display the METAR
 	metarDiv.id = "metarDiv";
+
 	var translatedMETARDiv = document.createElement('div'); // This creates a new div to display the title
 	translatedMETARDiv.id = "translatedMETARDiv";
+
 	var METARText = document.createElement('div'); // Creates a div to hold the translated elements
-	METARText.id = "METARText"
+	METARText.id = "METARText";
+
 	var translatedMETARText = new Array(2);  // This creates three spans to show the translated METAR
 	for (var i = 0; i < 3; i++) {
 		translatedMETARText[i] = document.createElement('span');
@@ -130,7 +153,7 @@ function fetchMetar(params) {
 
 	request(URL).then(function(result) { // Wait for promise to be fulfilled, and then do things with the response
 		metar = JSON.parse(result); // Parse JSON
-		if (metar["Raw-Report"] !== undefined && metar.Info !== undefined && metar.Translations !== undefined) { // If there is a raw-report field in the JSON, then show that in the text
+		if (metar["Raw-Report"] !== undefined && metar.Info !== undefined && metar.Translations !== undefined) { // If there is a raw-report field in the JSON, then feching METAR was a SUCCESS!
 
 			metarDiv.innerHTML = "<b>" + metar["Raw-Report"] + "</b><br><br>"; // Show the raw METAR
 			
@@ -152,20 +175,43 @@ function fetchMetar(params) {
 				}
 			}
 
-		} else { // If there isn't, tell the user that their query was invalid
-			metarDiv.innerHTML = "Your request was invalid!" + "<br><br>";
+			addElement(metarDiv); // Add to the webpage!
+
+			// Add the new spans to the div and then add the div
+			addElement(translatedMETARDiv);
+			for (var i = 0; i < 3; i++) {
+				METARText.appendChild(translatedMETARText[i]);
+			}
+			addElement(METARText);
+
+			hideLoading(); // Hide the loading text
+			ended = true; // The request has ended
+
+		} else if(metar.Error && failedOnce) { // This means that even after having tried to use a lat long from string, fetching the METAR failed
+			console.log("Error fetching metar. The value of failedOnce is " + failedOnce);
+			showFailed(metar.Error, metarDiv);
+		} else { // This means that it's the first time that it's failed. Get the lat/long using Google's geocoding API and try again
+			document.getElementById("loading-text").innerHTML = "Fetching address..."; // Add loading text
+			var addressURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + params.split(" ").join("+") + "&AIzaSyC-VD77LuMyvahBa4GCglZLWmkD9ysk_TY";
+			console.log(addressURL);
+			request(addressURL).then(function(result) {
+				var geocode = JSON.parse(result);
+				try {
+					if (geocode.status != "OK") { // This means that geocoding failed. :(
+						showFailed("No places found with that name!", metarDiv);
+					} else { // Geocoding succeeded! Get lat and long and fetch METAR again.
+						console.log(geocode.results[0].geometry.location.lat + ", " + geocode.results[0].geometry.location.lng);
+						var newParams = geocode.results[0].geometry.location.lat + "," + geocode.results[0].geometry.location.lng;
+						failedOnce = true;
+						fetchMetar(newParams);
+					}
+				} catch(error) {
+					showFailed("Uh oh! Something went wrong.<br><br> Error code:<br>" + error, metarDiv);
+				}
+			}).catch(function(reason) {
+				showFailed(reason, metarDiv);
+			});
 		}
-
-		addElement(metarDiv); // Add to the webpage!
-
-		// Add the new spans to the div and then add the div
-		addElement(translatedMETARDiv);
-		for (var i = 0; i < 3; i++) {
-			METARText.appendChild(translatedMETARText[i]);
-		}
-		addElement(METARText);
-
-		hideLoading(); // Hide the loading text
 	}).catch(function(reason) { // This means that the query was rejected for some reason
 		console.log(reason); // Log the reason and tell the user
 		metarDiv.innerHTML = "Your request was invalid!" + "<br><br>";
