@@ -23,7 +23,6 @@ returnButton.addEventListener('click', function(event) {
 	if (!ended) {
 		cancelled = true;
 	}
-	console.log("the value of cancelled is " + cancelled);
 	resetElements();
 	hideLoading();
 })
@@ -104,7 +103,6 @@ function showFailed(reason, element) {
 
 // A function to add an element to the page
 function addElement(element) {
-	console.log("The value of cancelled is " + cancelled);
 	if (!cancelled) {
 		document.getElementById("metarText").appendChild(element);
 	}
@@ -193,14 +191,12 @@ function fetchMetar(params) {
 		} else { // This means that it's the first time that it's failed. Get the lat/long using Google's geocoding API and try again
 			document.getElementById("loading-text").innerHTML = "Fetching address..."; // Add loading text
 			var addressURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + params.split(" ").join("+") + "&AIzaSyC-VD77LuMyvahBa4GCglZLWmkD9ysk_TY";
-			console.log(addressURL);
 			request(addressURL).then(function(result) {
 				var geocode = JSON.parse(result);
 				try {
 					if (geocode.status != "OK") { // This means that geocoding failed. :(
 						showFailed("No places found with that name!", metarDiv);
 					} else { // Geocoding succeeded! Get lat and long and fetch METAR again.
-						console.log(geocode.results[0].geometry.location.lat + ", " + geocode.results[0].geometry.location.lng);
 						var newParams = geocode.results[0].geometry.location.lat + "," + geocode.results[0].geometry.location.lng;
 						failedOnce = true;
 						fetchMetar(newParams);
