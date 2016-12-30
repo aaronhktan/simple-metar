@@ -190,7 +190,7 @@ function fetchMetar(params) {
 			showFailed(metar.Error, metarDiv);
 		} else { // This means that it's the first time that it's failed. Get the lat/long using Google's geocoding API and try again
 			document.getElementById("loading-text").innerHTML = "Fetching address..."; // Add loading text
-			var addressURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + params.split(" ").join("+") + "&AIzaSyC-VD77LuMyvahBa4GCglZLWmkD9ysk_TY";
+			var addressURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + params.split(" ").join("+") + "&key=AIzaSyC-VD77LuMyvahBa4GCglZLWmkD9ysk_TY";
 			request(addressURL).then(function(result) {
 				var geocode = JSON.parse(result);
 				try {
