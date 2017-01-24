@@ -7,3 +7,13 @@ According to Google, a METAR "is an aviation routine weather report issued at ho
 
 ### OK, how do I use it?
 Simple - enter the ICAO code or location of the station that you want to check the METAR for, or just let the browser determine your location. If there's a valid METAR to be found, it'll show up in a few seconds.
+
+### Screenshots!
+
+*iPhone*
+
+![alt tag](https://github.com/cheeseisdisgusting/simple-metar/blob/master/screenshots/iPhone%203G.png)
+
+*iPad*
+
+![alt tag](https://github.com/cheeseisdisgusting/simple-metar/blob/master/screenshots/iPad.png)
