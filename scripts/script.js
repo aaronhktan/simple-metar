@@ -173,15 +173,16 @@ function fetchMetar(params) {
 				}
 			}
 
-			addElement(metarDiv); // Add to the webpage!
+			if (!cancelled) {
+				addElement(metarDiv); // Add to the webpage!
 
-			// Add the new spans to the div and then add the div
-			addElement(translatedMETARDiv);
-			for (var i = 0; i < 3; i++) {
-				METARText.appendChild(translatedMETARText[i]);
+				// Add the new spans to the div and then add the div
+				addElement(translatedMETARDiv);
+				for (var i = 0; i < 3; i++) {
+					METARText.appendChild(translatedMETARText[i]);
+				}
+				addElement(METARText);
 			}
-			addElement(METARText);
-
 			hideLoading(); // Hide the loading text
 			ended = true; // The request has ended
 
