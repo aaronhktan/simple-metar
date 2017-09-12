@@ -25,6 +25,7 @@ returnButton.addEventListener('click', function(event) {
 	}
 	resetElements();
 	hideLoading();
+	window.scrollTo(0, 0);
 })
 
 document.getElementById('stationIdentifier').onkeypress=function(e){
