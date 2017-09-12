@@ -85,6 +85,22 @@ body {
 	padding-top: 0.5rem;
 }
 
+#related {
+	font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 12px;
+	line-height: 1.5;
+	color: #fff;
+	margin: 2rem;
+}
+
+#related a {
+	font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 12px;
+	line-height: 1.5;
+	color: #fff;
+	text-decoration: underline;
+}
+
 /* Hide unnecessary elements*/
 #returnButton {
 	display: none;
@@ -113,7 +129,8 @@ body {
 	#stationIdentifier {
 		max-width: 30%;
 		font-size: 2.0rem;
-		padding: 0.4rem;}
+		padding: 0.4rem; 
+		transition: font-size 0.2s; }
 	.footer {
 		position: fixed;
 		text-align: right;
@@ -127,12 +144,13 @@ body {
 		font-size: 0.9rem; }
 	#stationIdentifier {
 		padding: 0.45rem  0.5rem;
-		font-size: 1.5rem; }
+		font-size: 1.5rem; 
+		transition: font-size 0.2s; }
 	.footer {
 		text-align: right;
 		position: fixed;
 		bottom: 1em; 
-		right: 1em;}
+		right: 1em; }
 	}
 
 @media screen and (max-width: 42em) {
@@ -152,12 +170,17 @@ body {
 		margin-bottom: 0rem;
 		padding: 1rem;
 		width: 83%;
-		font-size: 1.5rem; }
+		font-size: 1.5rem; 
+		transition: font-size 0.2s; }
 	.footer {
-		display: none;}
+		display: none; }
 	}
 
 /* Style the title, tagline, instruction text */
+.project-name {
+	transition: font-size 0.2s; 
+}
+
 .instruction {
 	max-width: 85%;
 	margin: auto;
