@@ -214,8 +214,29 @@ function fetchMetar(params) {
 		}
 	}).catch(function(reason) { // This means that the query was rejected for some reason
 		console.log(reason); // Log the reason and tell the user
-		metarDiv.innerHTML = "Your request was invalid!" + "<br><br>";
-		addElement(metarDiv); // Add to the webpage!
-		hideLoading();
+		if (!failedOnce) { // Try it again!
+			document.getElementById("loading-text").innerHTML = "Fetching address..."; // Add loading text
+			var addressURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + params.split(" ").join("+") + "&key=AIzaSyC-VD77LuMyvahBa4GCglZLWmkD9ysk_TY";
+			request(addressURL).then(function(result) {
+				var geocode = JSON.parse(result);
+				try {
+					if (geocode.status != "OK") { // This means that geocoding failed. :(
+						showFailed("No places found with that name!", metarDiv);
+					} else { // Geocoding succeeded! Get lat and long and fetch METAR again.
+						var newParams = geocode.results[0].geometry.location.lat + "," + geocode.results[0].geometry.location.lng;
+						failedOnce = true;
+						fetchMetar(newParams);
+					}
+				} catch(error) {
+					showFailed("Uh oh! Something went wrong.<br><br> Error code:<br>" + error, metarDiv);
+				}
+			}).catch(function(reason) {
+				showFailed(reason, metarDiv);
+			});
+		} else {
+			metarDiv.innerHTML = "Your request was invalid!" + "<br><br>";
+			addElement(metarDiv); // Add to the webpage!
+			hideLoading();
+		}
 	});
 }
