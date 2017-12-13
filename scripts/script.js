@@ -234,9 +234,7 @@ function fetchMetar(params) {
 				showFailed(reason, metarDiv);
 			});
 		} else {
-			metarDiv.innerHTML = "Your request was invalid!" + "<br><br>";
-			addElement(metarDiv); // Add to the webpage!
-			hideLoading();
+			showFailed("Uh oh! Something went wrong.<br><br> Error code:<br>" + error, metarDiv);
 		}
 	});
 }
