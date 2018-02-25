@@ -26,14 +26,14 @@ body {
 .title {
 	margin-bottom: 2rem;
 	color: #fff;
-	font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	text-align: center;
 }
 
-.main-content {
+.mainContent {
 	padding: 0;
 	margin: 0 auto;
-	font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font-size: 0.9rem;
 	line-height: 1.5;
 	color: #fff;
@@ -46,14 +46,14 @@ body {
 
 /* Style the footer */
 .footer {
-	font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font-size: 12px;
 	line-height: 1.5;
 	color: #fff;
 }
 
 .footer a {
-	font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font-size: 12px;
 	line-height: 1.5;
 	color: #fff;
@@ -86,7 +86,7 @@ body {
 }
 
 #related {
-	font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font-size: 12px;
 	line-height: 1.5;
 	color: #fff;
@@ -94,7 +94,7 @@ body {
 }
 
 #related a {
-	font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font-size: 12px;
 	line-height: 1.5;
 	color: #fff;
@@ -111,7 +111,7 @@ body {
 }
 
 #stationIdentifier {
-	font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font-weight: normal;
 	border-radius: 0.3rem;
 	border-width: 0px;
@@ -119,7 +119,7 @@ body {
 	transition: font-size 0.2s;
 }
 
-.loading-text {
+.loadingText {
 	display: none;
 }
 
@@ -177,7 +177,7 @@ body {
 	}
 
 /* Style the title, tagline, instruction text */
-.project-name {
+.projectName {
 	transition: font-size 0.2s; 
 }
 
@@ -188,26 +188,26 @@ body {
 	font-weight: normal;
 }
 
-.project-name {
+.projectName {
 	transition: font-size 0.2s;
 }
 
 @media screen and (min-width: 64em) {
-	.project-name {
+	.projectName {
 		font-size: 4rem; } 
 	.instruction {
 		font-size: 1.25rem; } 
 	}
 
 @media screen and (min-width: 42em) and (max-width: 64em) {
-	.project-name {
+	.projectName {
 		font-size: 3rem; } 
 	.instruction {
 		font-size: 1.15rem; } 
 	}
 
 @media screen and (max-width: 42em) {
-	.project-name {
+	.projectName {
 		font-size: 2rem; } 
 	.instruction {
 		font-size: 1rem; }
@@ -215,21 +215,21 @@ body {
 
 /* Style the METAR text */
 @media screen and (min-width: 64em) {
-	#metarDiv {
+	.metarDiv {
 		font-size: 1.25rem; 
 		width: 75%; 
 		margin: auto; } 
-	#translatedMETARDiv {
+	.translatedMetarDiv {
 		font-size: 1rem;
 		width: 50%; 
 		text-align: center;
 		margin: auto; }
-	#METARText{
+	.metarText{
 		width: 50%;
 		margin: auto;
 		padding-bottom: 2em;
 	}
-	.translatedMETARText {
+	.translatedMetarText {
 		font-size: 0.9rem;
 		width: 33%;
 		text-align: center;
@@ -238,20 +238,20 @@ body {
 	}
 
 @media screen and (min-width: 42em) and (max-width: 64em) {
-	#metarDiv{
+	.metarDiv{
 		font-size: 1.15rem; 
 		width: 80%; 
 		margin: auto; } 
-	#translatedMETARDiv {
+	.translatedMetarDiv {
 		font-size: 1rem;
 		width: 80%; 
 		text-align: center;
 		margin: auto; }
-	#METARText{
+	.metarText{
 		margin: auto;
 		padding-bottom: 2em;
 	}
-	.translatedMETARText {
+	.translatedMetarText {
 		font-size: 0.9rem;
 		width: 80%;
 		margin: auto;
@@ -260,20 +260,20 @@ body {
 	}
 
 @media screen and (max-width: 42em) {
-	#metarDiv{
+	.metarDiv{
 		font-size: 1rem; 
 		width: 85%; 
 		margin: auto; }
-	#translatedMETARDiv {
+	.translatedMetarDiv {
 		font-size: 1rem;
 		width: 85%; 
 		text-align: center;
 		margin: auto; }
-	#METARText{
+	.metarText{
 		margin: auto;
 		padding-bottom: 2em;
 	}
-	.translatedMETARText {
+	.translatedMetarText {
 		font-size: 0.9rem;
 		width: 85%;
 		margin: auto;
@@ -381,7 +381,7 @@ svg {
 
 /* Paper Plane: Container */
 @media screen and (max-height: 40em) {
-	.plane-container {
+	.planeContainer {
 		max-width: 50%;
 		max-height: 1.5em;
 		z-index: 3;
@@ -394,7 +394,7 @@ svg {
 }
 
 @media screen and (min-height: 40em) {
-	.plane-container {
+	.planeContainer {
 		max-width: 50%;
 		max-height: 3em;
 		z-index: 3;
@@ -407,7 +407,7 @@ svg {
 
 /* Paper Plane: Animation from http://codepen.io/ItsJonQ/pen/yvfDF/ */
 
-.plane-container {
+.planeContainer {
 	-webkit-animation: paper-plane-scoping 2s alternate infinite;
 	-moz-animation: paper-plane-scoping 2s alternate infinite;
 	animation: paper-plane-scoping 2s alternate infinite;
