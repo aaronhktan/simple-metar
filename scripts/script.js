@@ -1,4 +1,4 @@
-var getMetarButton = document.getElementById('getMetarButton'), useLocationButton = document.getElementById('useLocationButton'), returnButton = document.getElementById('returnButton'), cancelled = false, ended = false, failed = false, failedOnce = false;
+var getMetarButton = document.getElementById('getMetarButton'), useLocationButton = document.getElementById('useLocationButton'), returnButton = document.getElementById('returnButton'), cancelled = false, failed = false, failedOnce = false;
 
 // Set up a listener for given station identifier button click
 getMetarButton.addEventListener('click', (event) => {
@@ -108,7 +108,7 @@ function showFailed(reason, element) {
   console.log(reason);
   failed = true;
   hideLoading();
-  element.innerHTML = reason + '<br><br>';
+  element.innerHTML = 'Uh oh! Something went wrong.<br><br> Error code:<br>' + reason + '<br><br>';
   addElement(element); // Add to the webpage!
 }
 
@@ -126,7 +126,7 @@ function getUserLocation() {
     navigator.geolocation.getCurrentPosition((position) => { // Getting location succeeded; do something with it!
       var params = position.coords.latitude + ',' + position.coords.longitude; // Add to parameters and fetch
       fetchMetar(params);
-    }, function(error) { // Something bad has happened; show to the user
+    }, (error) => { // Something bad has happened; show to the user
       console.log(error.code);
       failed = true;
       var metarDiv = document.createElement('div');
@@ -164,7 +164,7 @@ function fetchMetar(params) {
   request(URL).then((result) => { // Wait for promise to be fulfilled, and then do things with the response
     // Parse METAR data
     metar = JSON.parse(result);
-    if (metar['Raw-Report'] !== undefined && metar.Info !== undefined && metar.Translations !== undefined) { // If there is a raw-report field in the JSON, then feching METAR was a SUCCESS!
+    if (metar['Raw-Report'] !== undefined && metar.Info !== undefined && metar.Translate !== undefined) { // If there is a raw-report field in the JSON, then feching METAR was a SUCCESS!
 
       metarDiv.innerHTML = '<b>' + metar['Raw-Report'] + '</b><br><br>'; // Show the raw METAR
       
@@ -175,18 +175,18 @@ function fetchMetar(params) {
       translatedMetarText[0].innerHTML += '<b>Altitude</b>: ' + metar.Info.Elevation  + 'm<br>'; 
 
       var numberOfElements = 0;
-      for (var key in metar.Translations) { // Iterate through every element in the translated METAR section and add to second and third spans
-        if (metar.Translations[key] != '') {
+      for (var key in metar.Translate) { // Iterate through every element in the translated METAR section and add to second and third spans
+        if (metar.Translate[key] != '') {
           numberOfElements++;
           let content = '';
           if (key == 'Remarks') {
-            for (var remark in metar.Translations[key]) {
-              content += '<br>' + metar.Translations[key][remark];
+            for (var remark in metar.Translate[key]) {
+              content += '<br>' + metar.Translate[key][remark];
             }
           } else {
-            content = metar.Translations[key]
+            content = metar.Translate[key]
           }
-          if (numberOfElements < Object.keys(metar.Translations).length / 2) {
+          if (numberOfElements < Object.keys(metar.Translate).length / 2) {
             translatedMetarText[1].innerHTML += '<b>' + key + '</b>: ' + content + '<br>'; // Get and display element in middle div if there are fewer than one half displayed
           } else {
             translatedMetarText[2].innerHTML += '<b>' + key + '</b>: ' + content + '<br>'; // Otherwise, put it in the second div
@@ -204,7 +204,6 @@ function fetchMetar(params) {
         addElement(metarText);
       }
       hideLoading(); // Hide the loading text
-      ended = true; // The request has ended
 
     } else if (metar.Error && failedOnce) { // This means that even after having tried to use a lat long from string, fetching the METAR failed
       console.log('Error fetching metar. The value of failedOnce is ' + failedOnce);
@@ -212,7 +211,7 @@ function fetchMetar(params) {
     } else { // This means that it's the first time that it's failed. Get the lat/long using Google's geocoding API and try again
       document.getElementById('loadingText').innerHTML = 'Fetching address...'; // Add loading text
       var addressURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + params.split(' ').join('+') + '&key=AIzaSyC-VD77LuMyvahBa4GCglZLWmkD9ysk_TY';
-      request(addressURL).then(function(result) {
+      request(addressURL).then((result) => {
         var geocode = JSON.parse(result);
         try {
           if (geocode.status != 'OK') { // This means that geocoding failed. :(
@@ -223,7 +222,7 @@ function fetchMetar(params) {
             fetchMetar(newParams);
           }
         } catch(error) {
-          showFailed('Uh oh! Something went wrong.<br><br> Error code:<br>' + error, metarDiv);
+          showFailed(error, metarDiv);
         }
       }).catch((reason) => {
         showFailed(reason, metarDiv);
@@ -234,7 +233,7 @@ function fetchMetar(params) {
     if (!failedOnce) { // Try it again!
       document.getElementById('loadingText').innerHTML = 'Fetching address...'; // Add loading text
       var addressURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + params.split(' ').join('+') + '&key=AIzaSyC-VD77LuMyvahBa4GCglZLWmkD9ysk_TY';
-      request(addressURL).then(function(result) {
+      request(addressURL).then((result) => {
         var geocode = JSON.parse(result);
         try {
           if (geocode.status != 'OK') { // This means that geocoding failed. :(
@@ -245,13 +244,13 @@ function fetchMetar(params) {
             fetchMetar(newParams);
           }
         } catch(error) {
-          showFailed('Uh oh! Something went wrong.<br><br> Error code:<br>' + error, metarDiv);
+          showFailed(error, metarDiv);
         }
       }).catch((reason) => {
         showFailed(reason, metarDiv);
       });
     } else {
-      showFailed('Uh oh! Something went wrong.<br><br> Error code:<br>' + error, metarDiv);
+      showFailed(error, metarDiv);
     }
   });
 }
