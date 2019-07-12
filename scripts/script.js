@@ -164,32 +164,32 @@ function fetchMetar(params) {
   request(URL).then((result) => { // Wait for promise to be fulfilled, and then do things with the response
     // Parse METAR data
     metar = JSON.parse(result);
-    if (metar['Raw-Report'] !== undefined && metar.Info !== undefined && metar.Translate !== undefined) { // If there is a raw-report field in the JSON, then feching METAR was a SUCCESS!
+    if (metar.raw !== undefined && metar.info !== undefined && metar.translate !== undefined) { // If there is a raw-report field in the JSON, then feching METAR was a SUCCESS!
 
-      metarDiv.innerHTML = '<b>' + metar['Raw-Report'] + '</b><br><br>'; // Show the raw METAR
+      metarDiv.innerHTML = '<b>' + metar.raw + '</b><br><br>'; // Show the raw METAR
       
       translatedMetarDiv.innerHTML = 'Translated METAR:' + '<br><br>'; // Title for the translated METAR
 
-      translatedMetarText[0].innerHTML += '<b>City</b>: ' + metar.Info.City + '<br>'; // Information about METAR Station in first span
-      translatedMetarText[0].innerHTML += '<b>Airport Name</b>: ' + metar.Info.Name + '<br>';
-      translatedMetarText[0].innerHTML += '<b>Altitude</b>: ' + metar.Info.Elevation  + 'm<br>'; 
+      translatedMetarText[0].innerHTML += '<b>City</b>: ' + metar.info.city + '<br>'; // Information about METAR Station in first span
+      translatedMetarText[0].innerHTML += '<b>Airport Name</b>: ' + metar.info.name + '<br>';
+      translatedMetarText[0].innerHTML += '<b>Altitude</b>: ' + metar.info.elevation_ft  + 'm<br>'; 
 
       var numberOfElements = 0;
-      for (var key in metar.Translate) { // Iterate through every element in the translated METAR section and add to second and third spans
-        if (metar.Translate[key] != '') {
+      for (var key in metar.translate) { // Iterate through every element in the translated METAR section and add to second and third spans
+        if (metar.translate[key] != '') {
           numberOfElements++;
           let content = '';
-          if (key == 'Remarks') {
-            for (var remark in metar.Translate[key]) {
-              content += '<br>' + metar.Translate[key][remark];
+          if (key == 'remarks') {
+            for (let remark in metar.translate.remarks) {
+              content += '<br>' + metar.translate.remarks[remark];
             }
           } else {
-            content = metar.Translate[key]
+            content = metar.translate[key]
           }
-          if (numberOfElements < Object.keys(metar.Translate).length / 2) {
-            translatedMetarText[1].innerHTML += '<b>' + key + '</b>: ' + content + '<br>'; // Get and display element in middle div if there are fewer than one half displayed
+          if (numberOfElements < Object.keys(metar.translate).length / 2) {
+            translatedMetarText[1].innerHTML += '<b>' + key.charAt(0).toUpperCase() + key.slice(1) + '</b>: ' + content + '<br>'; // Get and display element in middle div if there are fewer than one half displayed
           } else {
-            translatedMetarText[2].innerHTML += '<b>' + key + '</b>: ' + content + '<br>'; // Otherwise, put it in the second div
+            translatedMetarText[2].innerHTML += '<b>' + key.charAt(0).toUpperCase() + key.slice(1) + '</b>: ' + content + '<br>'; // Otherwise, put it in the second div
           }
         }
       }
