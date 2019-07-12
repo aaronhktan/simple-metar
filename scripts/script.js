@@ -72,24 +72,23 @@ function resetElements() {
   document.getElementById('related').style.display = 'block';
   document.getElementById('returnButton').style.display = 'none';
   hideLoading();
-  if (!failed) {
-    var parent = document.getElementById('metarText');
-    var metarDivs = parent.getElementsByClassName('metarDiv');
-    var numberOfElements = metarDivs.length;
-    for (let i = 0; i < numberOfElements; i++) {
-      parent.removeChild(metarDivs[i]);
-    }
-    var translatedMetarDivs = parent.getElementsByClassName('translatedMetarDiv');
-    var numberOfElements = translatedMetarDivs.length;
-    for (let i = 0; i < numberOfElements; i++) {
-      parent.removeChild(translatedMetarDivs[i]);
-    }
-    var metarTexts = document.getElementsByClassName('metarText');
-    var numberOfElements = metarTexts.length;
-    for (let i = 0; i < numberOfElements; i++) {
-      parent.removeChild(metarTexts[i]);
-    }
-  } else {
+  var parent = document.getElementById('metarText');
+  var metarDivs = parent.getElementsByClassName('metarDiv');
+  var numberOfElements = metarDivs.length;
+  for (let i = 0; i < numberOfElements; i++) {
+    parent.removeChild(metarDivs[i]);
+  }
+  var translatedMetarDivs = parent.getElementsByClassName('translatedMetarDiv');
+  var numberOfElements = translatedMetarDivs.length;
+  for (let i = 0; i < numberOfElements; i++) {
+    parent.removeChild(translatedMetarDivs[i]);
+  }
+  var metarTexts = document.getElementsByClassName('metarText');
+  var numberOfElements = metarTexts.length;
+  for (let i = 0; i < numberOfElements; i++) {
+    parent.removeChild(metarTexts[i]);
+  }
+  if (failed) {
     failed = false;
   }
   if (failedOnce) {
@@ -205,10 +204,15 @@ function fetchMetar(params) {
       }
       hideLoading(); // Hide the loading text
 
-    } else if (metar.Error && failedOnce) { // This means that even after having tried to use a lat long from string, fetching the METAR failed
+    } else if (failedOnce) { // This means that even after having tried to use a lat long from string, fetching the METAR failed
       console.log('Error fetching metar. The value of failedOnce is ' + failedOnce);
-      showFailed(metar.Error, metarDiv);
+      if (metar.error) {
+        showFailed(metar.error, metarDiv);
+      } else {
+        showFailed('Couldn\'t fetch METAR', metarDiv);
+      }
     } else { // This means that it's the first time that it's failed. Get the lat/long using Google's geocoding API and try again
+      failedOnce = true;
       document.getElementById('loadingText').innerHTML = 'Fetching address...'; // Add loading text
       var addressURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + params.split(' ').join('+') + '&key=AIzaSyC-VD77LuMyvahBa4GCglZLWmkD9ysk_TY';
       request(addressURL).then((result) => {
@@ -218,7 +222,6 @@ function fetchMetar(params) {
             showFailed('No places found with that name!', metarDiv);
           } else { // Geocoding succeeded! Get lat and long and fetch METAR again.
             var newParams = geocode.results[0].geometry.location.lat + ',' + geocode.results[0].geometry.location.lng;
-            failedOnce = true;
             fetchMetar(newParams);
           }
         } catch(error) {
